@@ -6,33 +6,118 @@
   <script id="challenge">
     // 👉 CHALLENGE 1
     function profileActivation(profile, reason) {
+      //check if the profile is active
+      if(profile.active) {
+        //if there is no reason provided for deactivation, return an error message
+        if(!reason) {
+          return "confirm status manually";
+        }
+        //if there is a reason given, deactivate the profile and set the reason
+        profile.active = false;
+        profile.reason = reason;
 
+      } else {
+        //if the profile is inactive, activate it and erase the reason for it's inactivity.
+        profile.active = true;
+        delete profile.reason;
+      } 
+      // return  updated profile
+      return profile;
     }
 
     // 👉 CHALLENGE 2
     function mineSweeper(grid, x, y) {
+  // Adjust coordinates to 0-index
+  x--;
+  y--;
 
-    }
+  // Check if coordinates are out of bounds
+  if (x < 0 || x > 2 || y < 0 || y > 2) {
+    return "invalid coordinates";
+  }
+
+  // Check if spot is a mine or safe
+  if (grid[y][x] === "🟥") {
+    return "🟥 💀";
+  } else if (grid[y][x] === "🟦") {
+    return "🟦 🥳";
+  }
+}
+
+    
+    
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
-
+  for (let prop in obj) {
+    if (prop.length > 9) {
+      return "shorten all prop names to 9 chars or less";
+    } else if (obj[prop] === null) {
+      delete obj[prop];
+    } else if (obj[prop] === 0) {
+      obj[prop] = false;
+    } else if (obj[prop] === 1) {
+      obj[prop] = true;
     }
+  }
+  return obj;
+}
+
+
+    
 
     // 👉 CHALLENGE 4
     function scrub(text, forbidden) {
-
+  return text.split(' ').map(word => {
+    if (forbidden.includes(word)) {
+      return 'x'.repeat(word.length);
+    } else {
+      return word;
     }
+  }).join(' ');
+}
+
+    
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
+      let template = "(XXX) XXX-XXXX";
+  let counter = 0;
 
+  return template.split('').map(char => {
+    if (char === 'X') {
+      return num[counter++];
+    } else {
+      return char;
     }
+  }).join('');
+}
+
+    
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
-    function diceRolls() {
+    function diceRolls() { let rolls = 0;
+  let consecutiveSixes = 0;
 
+  while (true) {
+    rolls++;
+    let roll = Math.floor(Math.random() * 6) + 1;
+
+    if (roll === 6) {
+      consecutiveSixes++;
+    } else {
+      consecutiveSixes = 0;
     }
+
+    if (consecutiveSixes === 3) {
+      break;
+    }
+  }
+
+  return rolls;
+}
+
+  
 
     // 🧪 DO NOT make any changes below this line ===================
     globalThis.challengeVersion = 1
